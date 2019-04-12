@@ -1,30 +1,23 @@
-git add FILENAME = vorbereiten zum commiten
+# My Docs
 
-git commit = lokal in repository speichern
+## Git usage information
 
+* `git add FILENAME` = vorbereiten zum commiten
+* `git commit` = lokal in repository speichern
+  * `git commit -m "MESSAGE"` = Mit Nachricht. Am besten in Englisch
+  * `git commit -am "MESSAGE"` = Added bereits versionierte Dateien automatisch (also keine neuen Dateien). Mit Nachricht.
+* `git push` = remote repository pushen (gitlab)
 
-git commit -m "MESSAGE" = Mit Nachricht. Am besten in Englisch
+## Git make new project
 
-git commit -am "MESSAGE" = Added bereits versionierte Dateien automatisch (also keine neuen Dateien). Mit Nachricht.
+* make new project at gitlab(hub)
+* clone and copy ssh url
+* command line (in project folder): `git clone SSH_URL`
 
+## Sublime Multi-Cursor Selection
 
+* `Strg + D`
 
-git push = remote repository pushen (gitlab)
+## GitLab und GitHub Textformatierung
 
-
-Git make new project
-
-make new project at gitlab(hub)
-clone and copy ssh url
-command line (in project folder): git clone SSH_URL
-
-
-
-Sublime Multi-Cursor Selection
-
-Strg + D
-
-
-GitLab und GitHub Textformatierung
-
-Markdown Dokumentation
+* [Markdown Dokumentation](https://guides.github.com/features/mastering-markdown/)

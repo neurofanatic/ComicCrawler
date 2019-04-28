@@ -29,7 +29,7 @@ def findChapterUrls(html):
   parsed_html  = soup(html, "html.parser")
   chapter_tags = parsed_html.find_all(class_="row")
   atag  = []
-  print(chapter_tags[55].find("a")==True)
+
   # for rowtag in chapter_tags:
   #   rowtag.find("a")
 

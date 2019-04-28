@@ -21,3 +21,4 @@
 ## GitLab und GitHub Textformatierung
 
 * [Markdown Dokumentation](https://guides.github.com/features/mastering-markdown/)
+* [BeautifulSoup Dokumentation](https://www.crummy.com/software/BeautifulSoup/bs4/doc/#true)

@@ -5,7 +5,7 @@ from urllib.request import Request
 
 
 
-Url = "https://manganelo.com/manga/read_berserk_manga_online"
+Url = "https://manganelo.com/manga/berserk_of_gluttony"
 
 
 def fetchPage(url):  #input url -----> ouput: page_html
@@ -27,13 +27,11 @@ html = fetchPage(Url)
 
 def findChapterUrls(html):
   parsed_html  = soup(html, "html.parser")
-  chapter_tags = parsed_html.find_all(class_="row")
-  atag  = []
+  chapter_tags = parsed_html.select(".row a") #select .row = selects row tags leerzeicen --> untertag a.
 
-  # for rowtag in chapter_tags:
-  #   rowtag.find("a")
+  for tag in chapter_tags:
+    print(tag)
 
-  # print(atag)
 
 findChapterUrls(html)
 

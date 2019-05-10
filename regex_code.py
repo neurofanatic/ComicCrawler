@@ -9,6 +9,10 @@ user_agent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/
 
 def getdata (a):
 
+<<<<<<< HEAD
+=======
+    #matches = re.search('title=\"([\w\s:\-!;\d\.]+)Chapter ([\d\.\s\w]+)(?:\s?: ([\w\s!]+))?\"', a)
+>>>>>>> ff1faf744bfeb6fa5053fc90aed73f65f1947b1e
     matches = re.search('title=\"(.+)chapter ([\d\.\s\w]+)(?:\s?: (.+))?\">', a)
     title = matches.group(1)
     chapter = matches.group(2).zfill(3)

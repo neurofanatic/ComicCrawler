@@ -7,8 +7,9 @@ import regex_code as x
 
 #region | VARIABLES
 
-URL = "https://manganelo.com/manga/tales_of_demons_and_gods"
 
+URL = 'https://manganelo.com/manga/tales_of_demons_and_gods'
+ChapterUrl = []
 #endregion
 
 #region | FUNCTION 1 | Input(URL) -> Output(html)                       | auf Internetseite zugreifen und parsen

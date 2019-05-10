@@ -7,8 +7,9 @@ import regex_code as x
 
 #region | VARIABLES
 
-# URL = 'https://manganelo.com/manga/read_vagabond_manga'
+
 URL = 'https://manganelo.com/manga/tales_of_demons_and_gods'
+ChapterUrl = []
 #endregion
 
 #region | FUNCTION 1 | Input(URL) -> Output(html)                       | auf Internetseite zugreifen und parsen  
@@ -25,11 +26,14 @@ soup = BeautifulSoup(data, 'lxml')
     
 #// region | FUNCTION 2 | Durchsuchen(html) -> Output(ChapterURL-Liste)    | nach a-tags suchen; Filterfunktionen
 
-for link in soup.select(".row a"):
-    # comic_data = x.getdata(str(link))
-    # print(comic_data)
-
-    print(link.get('href'))
+for link in soup.select(".row a"):   
+    item = link
+    item = str(item).lower()
+    comic_data = x.getdata(item)
+    ChapterUrl.append(link.get('href'))
+    print(comic_data)
+    #print(link.get('href'))
+print(ChapterUrl)
 
 
 
@@ -55,7 +59,7 @@ for link in soup.select(".row a"):
 #       .
 #endregion
 
-#region | FUNCTION 4 | Zugriff(ChapterURL) -> DONE                      | Suche nach Bildern; Download der Bilder    
+#region | FUNCTION 4 | Zugriff() -> DONE                      | Suche nach Bildern; Download der Bilder    
 #       .
 #       .
 #endregion

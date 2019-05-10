@@ -1,16 +1,17 @@
 #region | IMPORTS
-import urllib.request 
-from bs4 import BeautifulSoup 
+import urllib.request
+from bs4 import BeautifulSoup
 import re
+import regex_code as x
 #endregion
 
 #region | VARIABLES
 
-# URL = 'https://manganelo.com/manga/read_vagabond_manga'
-URL = 'https://manganelo.com/manga/tales_of_demons_and_gods'
+URL = "https://manganelo.com/manga/tales_of_demons_and_gods"
+
 #endregion
 
-#region | FUNCTION 1 | Input(URL) -> Output(html)                       | auf Internetseite zugreifen und parsen  
+#region | FUNCTION 1 | Input(URL) -> Output(html)                       | auf Internetseite zugreifen und parsen
 
 user_agent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7'
 
@@ -21,11 +22,20 @@ response = urllib.request.urlopen(request)
 data = response.read()
 soup = BeautifulSoup(data, 'lxml')
 #endregion
-    
+
 #// region | FUNCTION 2 | Durchsuchen(html) -> Output(ChapterURL-Liste)    | nach a-tags suchen; Filterfunktionen
+ChapterUrl = []
 
 for link in soup.select(".row a"):
-    print(link.get('href'))
+  ChapterUrl.append(link.get('href'))
+  link = str(link).lower()
+  comic_data = x.getdata(link)
+
+
+  # print(link.get('href'))
+
+print (ChapterUrl[1])
+
 
 # for item in soup.select(".row a"):
 #     test = item.get('title')
@@ -48,7 +58,7 @@ for link in soup.select(".row a"):
 #       .
 #endregion
 
-#region | FUNCTION 4 | Zugriff(ChapterURL) -> DONE                      | Suche nach Bildern; Download der Bilder    
+#region | FUNCTION 4 | Zugriff(ChapterURL) -> DONE                      | Suche nach Bildern; Download der Bilder
 #       .
 #       .
 #endregion

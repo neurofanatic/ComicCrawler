@@ -5,10 +5,9 @@ import re
 #endregion
 
 #region | VARIABLES
-#
+
 # URL = 'https://manganelo.com/manga/read_vagabond_manga'
 URL = 'https://manganelo.com/manga/tales_of_demons_and_gods'
-#
 #endregion
 
 #region | FUNCTION 1 | Input(URL) -> Output(html)                       | auf Internetseite zugreifen und parsen  
@@ -21,23 +20,17 @@ response = urllib.request.urlopen(request)
 
 data = response.read()
 soup = BeautifulSoup(data, 'lxml')
-# print(soup.find_all('a'))
-
 #endregion
     
-#region | FUNCTION 2 | Durchsuchen(html) -> Output(ChapterURL-Liste)    | nach a-tags suchen; Filterfunktionen
+#// region | FUNCTION 2 | Durchsuchen(html) -> Output(ChapterURL-Liste)    | nach a-tags suchen; Filterfunktionen
 
-# for link in soup.find_all('a'):
-#     print(link.get('href'))
+for link in soup.select(".row a"):
+    print(link.get('href'))
 
-# for link in soup.select(".row a"):
+# for item in soup.select(".row a"):
+#     test = item.get('title')
+#     print(test[2])
 
-#     print(link.get('href'))
-
-for item in soup.select(".row a"):
-    test = item.get('title')
-    
-print(test[2])
 # ATAG = soup.select(".row a")
 # print(ATAG)
 ## print(ATAG[1].get('title'))

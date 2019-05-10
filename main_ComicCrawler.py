@@ -2,6 +2,7 @@
 import urllib.request 
 from bs4 import BeautifulSoup 
 import re
+import regex_code as x
 #endregion
 
 #region | VARIABLES
@@ -25,7 +26,13 @@ soup = BeautifulSoup(data, 'lxml')
 #// region | FUNCTION 2 | Durchsuchen(html) -> Output(ChapterURL-Liste)    | nach a-tags suchen; Filterfunktionen
 
 for link in soup.select(".row a"):
+    # comic_data = x.getdata(str(link))
+    # print(comic_data)
+
     print(link.get('href'))
+
+
+
 
 # for item in soup.select(".row a"):
 #     test = item.get('title')

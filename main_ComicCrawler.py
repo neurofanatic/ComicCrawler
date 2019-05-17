@@ -1,65 +1,55 @@
-#region | IMPORTS
+#| IMPORTS |-----------------------------------------------------------------------------------------
 import urllib.request 
 from bs4 import BeautifulSoup 
 import re
-import regex_code as x
-#endregion
+# import regex_code as regex
 
-#region | VARIABLES
-
-
+#| VARIABLES |---------------------------------------------------------------------------------------
 URL = 'https://manganelo.com/manga/tales_of_demons_and_gods'
-ChapterUrl = []
-#endregion
+chapter_list = []
+image_list = []
 
-#region | FUNCTION 1 | Input(URL) -> Output(html)                       | auf Internetseite zugreifen und parsen  
+#| DATA COLLECTION |---------------------------------------------------------------------------------
+def getdata_dict (a):
+    matches = re.search('title=\"(.+)chapter ([\d\.\s\w]+)(?:\s?: (.+))?\">', a)
+    title = matches.group(1)
+    chapter = matches.group(2)
+    chapter_name = matches.group(3)
+    return {'title': title, 'chapter': chapter, 'chapter_name': chapter_name}
 
-user_agent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7'
-
-headers={'User-Agent':user_agent,}
-request = urllib.request.Request(URL,None,headers) #The assembled request
-response = urllib.request.urlopen(request)
-
-data = response.read()
-soup = BeautifulSoup(data, 'lxml')
-#endregion
+#| ZUGRIFF WEBSITE URL |-----------------------------------------------------------------------------
+def html_request(url):
+    user_agent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7'
+    headers={'User-Agent':user_agent,}
+    request = urllib.request.Request(url,None,headers)
+    response = urllib.request.urlopen(request)
+    data = response.read()
+    soup = BeautifulSoup(data, 'lxml')
+    return soup
     
-#// region | FUNCTION 2 | Durchsuchen(html) -> Output(ChapterURL-Liste)    | nach a-tags suchen; Filterfunktionen
+#| ZUGRIFF CHAPTER URL |--------------------------------------------------------------------------------
+for item in html_request(URL).select(".row a"):   
+    link = item
+    link = str(link).lower()
+    # data_dict = regex.getdata_dict(link)
+    data_dict = getdata_dict(link)
+    chapter_list.append(item.get('href'))
 
-for link in soup.select(".row a"):   
-    item = link
-    item = str(item).lower()
-    comic_data = x.getdata(item)
-    ChapterUrl.append(link.get('href'))
-    print(comic_data)
-    #print(link.get('href'))
-print(ChapterUrl)
+#| ZUGRIFF IMAGE URL |---------------------------------------------------------------------------------
+for item_a in chapter_list:
+    for item_b in html_request(item_a).select("#vungdoc img"):
+        image_list.append(item_b.get('src'))
+       
+# print(image_list)
 
+#| DOWNLOAD IMAGES |-----------------------------------------------------------------------------------
+def dwnld(url, path):
+    urllib.request.urlretrieve(url, path)
 
+for item in image_list:
+    data_dict()
+    filename = item.split('/')[-1]
+    print(filename)
+#     new_path = data_dict()
+#     dwnld(item)
 
-
-# for item in soup.select(".row a"):
-#     test = item.get('title')
-#     print(test[2])
-
-# ATAG = soup.select(".row a")
-# print(ATAG)
-## print(ATAG[1].get('title'))
-# print(chapter_name)
-
-#endregion
-
-#region | FUNCTION 3 | Regex -> Ordnerstruktur                          | Benennung und Ordnung der Daten
-
-# matches = re.search('title=\"([\w\s:\-!;\d\.]+)Chapter ([\d\.\s\w]+)(?:\s?: ([\w\s!]+))?\"', URL)
-# comic_title = matches.group(1)
-# chapter = matches.group(2)
-# chapter_name = matches.group(3)
-
-#       .
-#endregion
-
-#region | FUNCTION 4 | Zugriff() -> DONE                      | Suche nach Bildern; Download der Bilder    
-#       .
-#       .
-#endregion

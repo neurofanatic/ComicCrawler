@@ -1,6 +1,6 @@
 import re
 
-def getdata (a):
+def getdata_dict (a):
 
     #matches = re.search('title=\"([\w\s:\-!;\d\.]+)Chapter ([\d\.\s\w]+)(?:\s?: ([\w\s!]+))?\"', a)
     matches = re.search('title=\"(.+)chapter ([\d\.\s\w]+)(?:\s?: (.+))?\">', a)

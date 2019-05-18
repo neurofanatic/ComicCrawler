@@ -2,6 +2,7 @@
 import urllib.request 
 from bs4 import BeautifulSoup 
 import re
+import os
 # import regex_code as regex
 
 #| VARIABLES |---------------------------------------------------------------------------------------
@@ -31,7 +32,6 @@ def html_request(url):
 for item in html_request(URL).select(".row a"):   
     link = item
     link = str(link).lower()
-    # data_dict = regex.getdata_dict(link)
     data_dict = getdata_dict(link)
     chapter_list.append(item.get('href'))
 
@@ -44,12 +44,27 @@ for item_a in chapter_list:
 
 #| DOWNLOAD IMAGES |-----------------------------------------------------------------------------------
 def dwnld(url, path):
+    for item in image_list:
+        s = data_dict['title']
+        re.search('%s ', item) % s
+        filename = item.split('/')[-1]
+        
+        try: 
+            os.mkdir(path)
+        except OSError:
+            print("Creation of the directory %s failed" % path)
+        else:
+            print("Successfully created the directory %s " % path)
     urllib.request.urlretrieve(url, path)
 
-for item in image_list:
-    data_dict()
-    filename = item.split('/')[-1]
-    print(filename)
-#     new_path = data_dict()
-#     dwnld(item)
+
+path = "C:\_CODING_\_testing_\\new\\bye\yes"
+
+try: 
+    os.mkdir(path)
+except OSError:
+    print("Creation of the directory %s failed" % path)
+else:
+    print("Successfully created the directory %s " % path)
+
 

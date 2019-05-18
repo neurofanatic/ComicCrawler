@@ -40,31 +40,39 @@ for item_a in chapter_list:
     for item_b in html_request(item_a).select("#vungdoc img"):
         image_list.append(item_b.get('src'))
        
-# print(image_list)
-
 #| DOWNLOAD IMAGES |-----------------------------------------------------------------------------------
-def dwnld(url, path):
-    for item in image_list:
-        s = data_dict['title']
-        re.search('%s ', item) % s
-        filename = item.split('/')[-1]
-        
+def dwnld(url):
+    temp_t = data_dict['title']
+    
+    try:
+        os.mkdir('C:\ComicCrawler\%s' % temp_t) 
+    except OSError:
+        print("Creation of the parent directory failed")
+    
+    os.chdir('C:\ComicCrawler\%s' % temp_t) 
+     
+    for item in url:
+        temp_c = data_dict['chapter']
+        temp_n = data_dict['chapter_name']
+        #if.....
         try: 
-            os.mkdir(path)
+            os.mkdir('%s'+ '%s' % ('Chapter' + temp_c, '-' + temp_n))  
         except OSError:
-            print("Creation of the directory %s failed" % path)
-        else:
-            print("Successfully created the directory %s " % path)
-    urllib.request.urlretrieve(url, path)
+            print("Creation of the chapter directory failed")
+            
+    #     filename = item.split('/')[-1]         
+    #     re.search('%s ', item) % s
+    # urllib.request.urlretrieve(url, path)
 
+dwnld(image_list)
 
-path = "C:\_CODING_\_testing_\\new\\bye\yes"
+# path = "C:\_CODING_\_testing_\\new\\bye\yes"
 
-try: 
-    os.mkdir(path)
-except OSError:
-    print("Creation of the directory %s failed" % path)
-else:
-    print("Successfully created the directory %s " % path)
+# try: 
+#     os.mkdir(path)
+# except OSError:
+#     print("Creation of the directory %s failed" % path)
+# else:
+#     print("Successfully created the directory %s " % path)
 
 

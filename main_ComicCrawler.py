@@ -44,16 +44,16 @@ for item_a in chapter_urls:
   
 #| DOWNLOAD IMAGES |-----------------------------------------------------------------------------------
 def dwnld(url):
-    temp_t = data_list['title']
+    temp_t = data_list[0]['title']
     path_p = 'C:\\ComicCrawler\\{}'
 
     try:
-        if not os.path.exists(path_p.format(data_list['title'])):
-            os.makedirs(path_p.format(data_list['title'])) 
+        if not os.path.exists(path_p.format(temp_t)):
+            os.makedirs(path_p.format(temp_t)) 
     except OSError:
         print("Creation of the parent directory failed")
 
-    os.chdir(path_p.format(data_list['title']))
+    os.chdir(path_p.format(temp_t))
 
     for item in url:
         temp_c = data_list['chapter']
@@ -71,7 +71,7 @@ def dwnld(url):
     #     re.search('%s ', item) % s
     #   urllib.request.urlretrieve(url, path)
 
-dwnld(image_list)
+dwnld(data_list)
 
 
 

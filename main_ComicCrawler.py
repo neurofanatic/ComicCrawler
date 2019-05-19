@@ -31,7 +31,7 @@ def html_request(url):
 
 # ------------------------------------------------------------------------------| DIRECTORY CREATION |
 def dwnld(data):
-    #for item in length ?!
+    
     index = 0
     temp_t = data[index]['title']
     temp_p =  os.getcwd()

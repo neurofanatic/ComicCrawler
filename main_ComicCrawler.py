@@ -7,8 +7,9 @@ import os
 
 #| VARIABLES |---------------------------------------------------------------------------------------
 URL = 'https://manganelo.com/manga/tales_of_demons_and_gods'
-chapter_list = []
+chapter_urls = []
 image_list = []
+data_list = []
 
 #| DATA COLLECTION |---------------------------------------------------------------------------------
 def getdata_dict (a):
@@ -21,58 +22,56 @@ def getdata_dict (a):
 #| ZUGRIFF WEBSITE URL |-----------------------------------------------------------------------------
 def html_request(url):
     user_agent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7'
-    headers={'User-Agent':user_agent,}
+    headers = {'User-Agent':user_agent,}
     request = urllib.request.Request(url,None,headers)
     response = urllib.request.urlopen(request)
     data = response.read()
     soup = BeautifulSoup(data, 'lxml')
     return soup
-    
+
 #| ZUGRIFF CHAPTER URL |--------------------------------------------------------------------------------
 for item in html_request(URL).select(".row a"):   
-    link = item
-    link = str(link).lower()
-    data_dict = getdata_dict(link)
-    chapter_list.append(item.get('href'))
-
+    low = item
+    low = str(low).lower()
+    data_list.append(getdata_dict(low))
+    chapter_urls.append(item.get('href'))
+    
 #| ZUGRIFF IMAGE URL |---------------------------------------------------------------------------------
-for item_a in chapter_list:
+for item_a in chapter_urls:
     for item_b in html_request(item_a).select("#vungdoc img"):
         image_list.append(item_b.get('src'))
-       
+    data_list[0].update( {'img': image_list})
+  
 #| DOWNLOAD IMAGES |-----------------------------------------------------------------------------------
 def dwnld(url):
-    temp_t = data_dict['title']
-    
+    temp_t = data_list['title']
+    path_p = 'C:\\ComicCrawler\\{}'
+
     try:
-        os.mkdir('C:\ComicCrawler\%s' % temp_t) 
+        if not os.path.exists(path_p.format(data_list['title'])):
+            os.makedirs(path_p.format(data_list['title'])) 
     except OSError:
         print("Creation of the parent directory failed")
-    
-    os.chdir('C:\ComicCrawler\%s' % temp_t) 
-     
+
+    os.chdir(path_p.format(data_list['title']))
+
     for item in url:
-        temp_c = data_dict['chapter']
-        temp_n = data_dict['chapter_name']
-        #if.....
-        try: 
-            os.mkdir('%s'+ '%s' % ('Chapter' + temp_c, '-' + temp_n))  
+        temp_c = data_list['chapter']
+        temp_n = data_list['chapter_name']
+        temp_p =  os.getcwd()
+        path_c = temp_p + '{}' + '{}'
+
+        try:
+            if not os.path.exists(path_c.format('\\Chapter_' + temp_c, '-' + temp_n)):
+                os.mkdir(path_c.format('\\Chapter_' + temp_c, '-' + temp_n)) 
         except OSError:
             print("Creation of the chapter directory failed")
             
     #     filename = item.split('/')[-1]         
     #     re.search('%s ', item) % s
-    # urllib.request.urlretrieve(url, path)
+    #   urllib.request.urlretrieve(url, path)
 
 dwnld(image_list)
 
-# path = "C:\_CODING_\_testing_\\new\\bye\yes"
-
-# try: 
-#     os.mkdir(path)
-# except OSError:
-#     print("Creation of the directory %s failed" % path)
-# else:
-#     print("Successfully created the directory %s " % path)
 
 

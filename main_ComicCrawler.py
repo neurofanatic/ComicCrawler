@@ -3,9 +3,11 @@ import urllib.request
 from bs4 import BeautifulSoup 
 import re
 import os
+import requests
 
 #---------------------------------------------------------------------------------------| VARIABLES |
-URL = 'https://manganelo.com/manga/tales_of_demons_and_gods'
+URL = 'https://manganelo.com/manga/ch919349'
+#URL =  input("Enter the Url of the Comic you want to downlaod: ")
 chapter_urls = []
 image_list = []
 data_list = []
@@ -33,35 +35,44 @@ def html_request(url):
 def dwnld(data):
     
     index = 0
-    temp_t = data[index]['title']
-    temp_p =  os.getcwd()
+    t_title = data[index]['title']
+    t_path =  os.getcwd()
     path_p = 'C:\\ComicCrawler\\{}'
     
     try:
-        if not os.path.exists(path_p.format(temp_t)):
-            os.makedirs(path_p.format(temp_t)) 
+        if not os.path.exists(path_p.format(t_title)):
+            os.makedirs(path_p.format(t_title)) 
     except OSError:
         print("Creation of the parent directory failed")
 
-    os.chdir(path_p.format(temp_t))
+    os.chdir(path_p.format(t_title))
 
     for item in data[index]['img']:
-        temp_c = data[index]['chapter']
-        temp_n = data[index]['chapter_name']
-        path_c = temp_p + '{}' + '{}'
+        t_chapter = data[index]['chapter']
+        t_chapter_name = data[index]['chapter_name']
+        path_c = t_path + '{}' + '{}'
 
         try:
-            if not os.path.exists(path_c.format('\\Chapter_' + temp_c, '-' + temp_n)):
-                os.mkdir(path_c.format('\\Chapter_' + temp_c, '-' + temp_n)) 
+            if not os.path.exists(path_c.format('\\Chapter_' + t_chapter, '-' + t_chapter_name)):
+                os.mkdir(path_c.format('\\Chapter_' + t_chapter, '-' + t_chapter_name)) 
             else:
-                os.chdir(path_c.format('\\Chapter_' + temp_c, '-' + temp_n))
+                os.chdir(path_c.format('\\Chapter_' + t_chapter, '-' + t_chapter_name))
         except OSError:
             print("Creation of the chapter directory failed")
+        
+        os.chdir(path_c.format('\\Chapter_' + t_chapter, '-' + t_chapter_name))
+        
+        img_name = path_c.format('\\Chapter_' + t_chapter, '-' + t_chapter_name)
 
         #----------------------------------------------------------------------------| IMAGE REQUEST |
-        filename = item.split('/')[-1] 
-        urllib.request.urlretrieve(item, path_c) !! SERVER_ERROR 403 !!
+        # filename = item.split('/')[-1] 
+        img =requests.get(image_list[index]).content
+        with open(img_name + ".png", 'wb') as handler:
+            handler.write(img)
+
+        # urllib.request.urlretrieve(item, path_c) !! SERVER_ERROR 403 !!
         index = index + 1
+        
 
 #-------------------------------------------------------------------------------| ACCESS CHAPTER URL |
 for item in html_request(URL).select(".row a"):   
